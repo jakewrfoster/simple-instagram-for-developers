@@ -46,22 +46,7 @@ if ( ! function_exists('fdinst_add_scripts') ) {
 
 if ( ! function_exists('fdinst_load_defaults') ) {
 	function fdinst_load_defaults() {
-		$fdinst_options = get_option('fdinst_options');
-		if ( ! empty($fdinst_options) )
-			return;
-
-		@include_once('fdinst_defaults.php');
-
-		if ( isset($fdinst_toolbars) ) {
-			add_option( 'fdinst_options', $fdinst_options );
-			add_option( 'fdinst_toolbars', $fdinst_toolbars, '', 'no' );
-			add_option( 'fdinst_plugins', $fdinst_plugins, '', 'no' );
-			add_option( 'fdinst_btns1', $fdinst_btns1, '', 'no' );
-			add_option( 'fdinst_btns2', $fdinst_btns2, '', 'no' );
-			add_option( 'fdinst_btns3', $fdinst_btns3, '', 'no' );
-			add_option( 'fdinst_btns4', $fdinst_btns4, '', 'no' );
-			add_option( 'fdinst_allbtns', $fdinst_allbtns, '', 'no' );
-		}
+		include_once('fdinst_defaults.php');
 	}
 	add_action( 'admin_init', 'fdinst_load_defaults' );
 }
@@ -76,45 +61,6 @@ if ( ! function_exists('fdinst_menu') ) {
 	}
 	add_action( 'admin_menu', 'fdinst_menu' );
 }
-
-/*
-class CC_Instgram {
-
-	public function __construct() {
-		add_shortcode( 'ccinstagram', array($this, 'cc_instagram_feed') );
-	}
-
-	public function cc_instagram_feed() {
-
-	}
-}
-
-class CC_Instagram_API {
-
-	protected $apiurl = 'https://api.instagram.com/v1/tags/coffee/media/recent?access_token=';
-	protected $user = '367274847'; // create collect user id
-	protected $client_id = '077beab5bdd2442a92d723d888cbe337'; // instagram api client id
-	protected $handshake = 0a0f8d7bb5044c9c90e95af272eab928;
-	protected $handshake = d0da1605725c40c2b3f32176eee1d520; // NEWEST
-	protected $access_token = '367274847.077beab.c1f43b76f8924dc6a597da4233883feb';
-
-
-	public function __contruct( $user ) {
-		$this->user = $user;
-	}
-
-	public function CcGetFeed() {
-
-	}
-
-}
-
-$cc_instagram = new CC_Instgram();
-*/
-
-
-
-
 
 
 // fix SSL request error
@@ -136,7 +82,7 @@ function fd_instagram_embed_shortcode( $atts, $content = null ) {
 	$str    = "";
 
 	// get remote data
-	$result = wp_remote_get( 'https://api.instagram.com/v1/users/'. $fdinst_options["user"] .'/media/recent/?client_id='. $fdinst_options["client_id"] .'&count='.$fdinst_options["count"] );
+	$result = wp_remote_get( 'https://api.instagram.com/v1/users/'. get_option("fdinst_user") .'/media/recent/?client_id='. get_option("fdinst_client_id") .'&count='.get_option("fdinst_count") );
 
 	if ( is_wp_error( $result ) ) {
 		// error handling
@@ -144,6 +90,7 @@ function fd_instagram_embed_shortcode( $atts, $content = null ) {
 		$str           = "Something went wrong: $error_message";
 	} else {
 		// processing further
+
 		$result    = json_decode( $result['body'] );
 		$main_data = array();
 		$n         = 0;
@@ -156,7 +103,7 @@ function fd_instagram_embed_shortcode( $atts, $content = null ) {
 			$main_data[ $n ]['likes']        = $d->likes->count;
 			$main_data[ $n ]['link']         = $d->link;
 			$main_data[ $n ]['comments']     = $d->comments->count;
-			$main_data[ $n ]['date'] = $d->created_time;
+			$main_data[ $n ]['date']         = $d->created_time;
 			$n++;
 		}
 

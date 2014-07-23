@@ -5,3 +5,7 @@ $fdinst_options = array(
 	'count'        		=> 5,
 	'use_flex_slider'	=> 1
 );
+add_option('fdinst_user', $fdinst_options["user"]);
+add_option('fdinst_client_id', $fdinst_options["client_id"]);
+add_option('fdinst_count', $fdinst_options["count"]);
+add_option('fdinst_flex', $fdinst_options["use_flex_slider"]);
