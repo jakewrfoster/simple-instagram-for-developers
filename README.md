@@ -8,6 +8,6 @@ Simple Instagram for Developers
 
 4) Style to your heart's content
 
-In the future I will be adding slideshow options (using Flexslider), advanced error handling, a set of out-of-the-box styles as well as better support from the options page (for those who may need help obtaining the proper info from the Instagram API)
+In the future I will be adding slideshow options (currently has hardcoded classes for use with Flexslider), advanced error handling, a set of out-of-the-box styles as well as better support from the options page (for those who may need help obtaining the proper info from the Instagram API)
 
 <3
