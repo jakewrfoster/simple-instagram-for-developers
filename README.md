@@ -1,6 +1,6 @@
-simple-instagram-for-developers
+Simple Instagram for Developers
 ===============================
-1) Obtain a Client ID from the Instagram API
+1) <b style="color:red;">Obtain a Client ID from the Instagram API</b>
 
 2) Enter the Client ID along with the User ID of the feed you would like to display on your wordpress install in the plugin settings
 
